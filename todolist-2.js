@@ -1,5 +1,6 @@
 const input = document.getElementById('add-input')
 const button =  document.getElementById('add-button')
+
 function addTask(){
     button.addEventListener('click',(event)=>{
         //prevent default
@@ -12,6 +13,8 @@ function addTask(){
         // template string
         taskElement.innerHTML = `
         <div class="content">
+            <input
+                type="checkbox" class='checkbox'/>
             <input
                 type="text"
                 class="text"
@@ -26,12 +29,13 @@ function addTask(){
         tasksDivElement.appendChild(taskElement)
         input.value = ''
         deleteTask()
+        doneTask()
     })
 
 }
 
 function deleteTask(){
-    const taskElements = document.querySelectorAll('.task')
+const taskElements = document.querySelectorAll('.task')
     if(taskElements.length){
         taskElements.forEach(taskElement => {
             const deleteButtonElement= taskElement.querySelector('.delete')
@@ -40,6 +44,25 @@ function deleteTask(){
             })
         })
     }
+}
+
+//arrow function =>
+const doneTask = ()=>{
+const taskElements = document.querySelectorAll('.task')
+    if(!taskElements.length)return
+    taskElements.forEach(taskElement => {
+        const checkbox = taskElement.querySelector('.checkbox')
+        checkbox.addEventListener('change', (event)=>{
+            console.log(event.target.checked , 'test');
+            const isChecked = event.target.checked
+            if(isChecked){
+                taskElement.classList.add('is-done')
+                return
+            }
+            taskElement.classList.remove('is-done')
+
+        })
+    })
 }
 
 addTask()

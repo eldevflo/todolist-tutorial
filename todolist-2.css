@@ -122,3 +122,7 @@ input, button{
 .task .actions .delete{
  color: crimson;
 }
+.tasks .is-done .content .text{
+    color: #808080;
+    text-decoration: line-through;
+}
