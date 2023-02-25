@@ -126,3 +126,7 @@ input, button{
     color: #808080;
     text-decoration: line-through;
 }
+.content{
+    cursor: pointer;
+    width: 100%;
+}
