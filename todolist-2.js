@@ -94,6 +94,7 @@ function addTodo(value){
 function renderTodo(todo){
     const tasksDivElement = document.querySelector('.tasks')
     const taskElement = document.createElement('div')
+    const existed = document.querySelector( `[data-key='${todo.id}']`)
     taskElement.classList.add('task')
     // template string
     taskElement.innerHTML = `
@@ -112,16 +113,28 @@ function renderTodo(todo){
     </div>
     `
     taskElement.setAttribute('data-key', todo.id)
-    tasksDivElement.appendChild(taskElement)
+    if(todo.isDone){
+        taskElement.classList.add('is-done')
+    }
+    if(existed){
+        tasksDivElement.replaceChild(taskElement ,existed)
+    }else{
+        tasksDivElement.appendChild(taskElement)
+    }
+    
 }
 
 const tasksElement = document.querySelector('.tasks')
-
 tasksElement.addEventListener('click', (event) =>{
-    console.log(event.target.classList);
-    if(event.target.classList.contains('content')){
-        const taskId = event.target.parentElement.dataset.key
-        
-        // doneTodo()
+    if(event.target.classList.contains('checkbox')){
+        const parentElement= event.target.parentElement;
+        const taskId = parentElement.parentElement.dataset.key;
+        toggleDone(taskId)
     }
 })
+
+function toggleDone(taskId) {
+    const index = todoList.findIndex(item => item.id === Number(taskId))
+    todoList[index].isDone = !todoList[index].isDone
+    renderTodo(todoList[index])
+}
